@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
+    // Text on UI
     public TextMesh mTextQuaternionX;
     public TextMesh mTextQuaternionY;
     public TextMesh mTextQuaternionZ;
@@ -13,10 +14,12 @@ public class PlayerController : MonoBehaviour
     public TextMesh mTextMovementY;
     public TextMesh mTextMovementZ;
 
-#if TEST
-    // TestOnly
-    public float X, Y, Z, Qx, Qy, Qz, Qw;
-#endif
+    // Interpolant
+    public float mInterpolantQuaternion;
+    public float mInterpolantMovement;
+
+    // Quaternion and Movement values
+    public float mX, mY, mZ, mQx, mQy, mQz, mQw;
 
     // Use this for initialization
     void Start()
@@ -28,17 +31,17 @@ public class PlayerController : MonoBehaviour
         mTextQuaternionY = GameObject.Find("QuaternionY").GetComponent<TextMesh>();
         mTextQuaternionZ = GameObject.Find("QuaternionZ").GetComponent<TextMesh>();
         mTextQuaternionW = GameObject.Find("QuaternionW").GetComponent<TextMesh>();
-
-#if TEST
-        Move(X, Y, Z);
-        Rotate(Qx, Qy, Qz, Qw);
-#endif
     }
 
+    bool b = true;
     // Update is called once per frame
     void Update()
     {
+        // Update helicopter rotation and position
+        SmoothMove(mX, mY, mZ);
+        SmoothRotate(mQx, mQy, mQz, mQw);
 
+        // Leave app when pressing back/home keys
         if (Application.platform == RuntimePlatform.Android)
         {
             // Back/Home key to exit Unity app
@@ -56,7 +59,7 @@ public class PlayerController : MonoBehaviour
     }
 
     #region Rotation
-    public void Rotate(float x, float y, float z, float w)
+    private void Rotate(float x, float y, float z, float w)
     {
         GetComponent<Transform>().rotation = new Quaternion(x, y, z, w);
         mTextQuaternionX.text = string.Format("Qx: {0:0.0000}", x);
@@ -65,7 +68,17 @@ public class PlayerController : MonoBehaviour
         mTextQuaternionW.text = string.Format("Qw: {0:0.0000}", w);
     }
 
-    // For Android SendMessage
+    private void SmoothRotate(float x, float y, float z, float w)
+    {
+        transform.rotation = Quaternion.Lerp(transform.rotation, new Quaternion(x, y, z, w), mInterpolantQuaternion);
+
+        mTextQuaternionX.text = string.Format("Qx: {0:0.0000}", x);
+        mTextQuaternionY.text = string.Format("Qy: {0:0.0000}", y);
+        mTextQuaternionZ.text = string.Format("Qz: {0:0.0000}", z);
+        mTextQuaternionW.text = string.Format("Qw: {0:0.0000}", w);
+    }
+
+    // Export to set rotation
     public void setRotation(string xyzw)
     {
         string[] values = xyzw.Split(',');
@@ -75,29 +88,43 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            float x = float.Parse(values[0]);
-            float y = float.Parse(values[1]);
-            float z = float.Parse(values[2]);
-            float w = float.Parse(values[3]);
-            Rotate(x, y, z, w);
-            mTextQuaternionX.text = string.Format("Qx: {0:0.0000}", x);
-            mTextQuaternionY.text = string.Format("Qy: {0:0.0000}", y);
-            mTextQuaternionZ.text = string.Format("Qz: {0:0.0000}", z);
-            mTextQuaternionW.text = string.Format("Qw: {0:0.0000}", w);
+            mQx = float.Parse(values[0]);
+            mQy = float.Parse(values[1]);
+            mQz = float.Parse(values[2]);
+            mQw = float.Parse(values[3]);
+            //Rotate(x, y, z, w);
+            //mTextQuaternionX.text = string.Format("Qx: {0:0.0000}", x);
+            //mTextQuaternionY.text = string.Format("Qy: {0:0.0000}", y);
+            //mTextQuaternionZ.text = string.Format("Qz: {0:0.0000}", z);
+            //mTextQuaternionW.text = string.Format("Qw: {0:0.0000}", w);
         }
+    }
+
+    // Export to set interpolant quaternion
+    public void setQuaternionT(string t)
+    {
+        mInterpolantQuaternion = float.Parse(t);
     }
     #endregion
 
     #region Movement
-    public void Move(float x, float y, float z)
+    private void Move(float x, float y, float z)
     {
         GetComponent<Transform>().position = new Vector3(x, y, z);
         mTextMovementX.text = string.Format("X: {0:0.0000}", x);
         mTextMovementY.text = string.Format("Y: {0:0.0000}", y);
         mTextMovementZ.text = string.Format("Z: {0:0.0000}", z);
     }
+private void SmoothMove(float x, float y, float z)
+    {
+        transform.position = Vector3.Lerp(transform.position, new Vector3(x, y, z), mInterpolantMovement);
 
-    // For Android SendMessage
+        mTextMovementX.text = string.Format("X: {0:0.0000}", x);
+        mTextMovementY.text = string.Format("Y: {0:0.0000}", y);
+        mTextMovementZ.text = string.Format("Z: {0:0.0000}", z);
+    }
+
+    // Export to set movement
     public void setMovement(string xyz)
     {
         string[] values = xyz.Split(',');
@@ -107,14 +134,20 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            float x = float.Parse(values[0]);
-            float y = float.Parse(values[1]);
-            float z = float.Parse(values[2]);
-            Move(x, y, z);
-            mTextMovementX.text = string.Format("X: {0:0.0000}", x);
-            mTextMovementY.text = string.Format("Y: {0:0.0000}", y);
-            mTextMovementZ.text = string.Format("Z: {0:0.0000}", z);
+            mX = float.Parse(values[0]);
+            mY = float.Parse(values[1]);
+            mZ = float.Parse(values[2]);
+            //Move(x, y, z);
+            //mTextMovementX.text = string.Format("X: {0:0.0000}", x);
+            //mTextMovementY.text = string.Format("Y: {0:0.0000}", y);
+            //mTextMovementZ.text = string.Format("Z: {0:0.0000}", z);
         }
+    }
+
+    // Export to set interpolant movement
+    public void setMovementT(string t)
+    {
+        mInterpolantMovement = float.Parse(t);
     }
     #endregion
 }

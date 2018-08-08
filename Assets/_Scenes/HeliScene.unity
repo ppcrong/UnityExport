@@ -455,6 +455,15 @@ MonoBehaviour:
   mTextMovementX: {fileID: 0}
   mTextMovementY: {fileID: 0}
   mTextMovementZ: {fileID: 0}
+  mInterpolantQuaternion: 0.01
+  mInterpolantMovement: 0.01
+  mX: 0
+  mY: 0
+  mZ: 0
+  mQx: 0
+  mQy: 0
+  mQz: 0
+  mQw: 0
 --- !u!1 &1336321802
 GameObject:
   m_ObjectHideFlags: 0
