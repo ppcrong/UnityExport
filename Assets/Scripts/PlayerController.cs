@@ -115,7 +115,8 @@ public class PlayerController : MonoBehaviour
         mTextMovementY.text = string.Format("Y: {0:0.0000}", y);
         mTextMovementZ.text = string.Format("Z: {0:0.0000}", z);
     }
-private void SmoothMove(float x, float y, float z)
+
+    private void SmoothMove(float x, float y, float z)
     {
         transform.position = Vector3.Lerp(transform.position, new Vector3(x, y, z), mInterpolantMovement);
 
