@@ -36,10 +36,22 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Current player position
-        mTextCx.text = string.Format("Cx: {0:0.0000}", transform.position.x);
-        mTextCy.text = string.Format("Cy: {0:0.0000}", transform.position.y);
-        mTextCz.text = string.Format("Cz: {0:0.0000}", transform.position.z);
+    }
+
+    void FixedUpdate()
+    {
+        try
+        {
+            // Current player position
+            mTextCx.text = string.Format("Cx: {0:0.0000}", transform.position.x);
+            mTextCy.text = string.Format("Cy: {0:0.0000}", transform.position.y);
+            mTextCz.text = string.Format("Cz: {0:0.0000}", transform.position.z);
+        }
+        catch (System.Exception ex)
+        {
+            Debug.Log("Update current player position exception!!!");
+            Debug.Log(ex.ToString());
+        }
 
         if (mIsFollowPlayer)
         {

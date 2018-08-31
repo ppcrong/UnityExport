@@ -49,6 +49,19 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Leave app when pressing back/home keys
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            // Back/Home key to exit Unity app
+            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Home))
+            {
+                Application.Quit();
+            }
+        }
+    }
+
+    void FixedUpdate()
+    {
         // Update helicopter rotation and position
         switch (mRotateType)
         {
@@ -70,22 +83,6 @@ public class PlayerController : MonoBehaviour
                 SmoothMove(mX, mY, mZ);
                 break;
         }
-
-        // Leave app when pressing back/home keys
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            // Back/Home key to exit Unity app
-            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Home))
-            {
-                Application.Quit();
-            }
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        //float moveHorizontal = Input.GetAxis("Horizontal");
-        //float moveVertical = Input.GetAxis("Vertical");
     }
 
     #region Rotation
@@ -93,20 +90,36 @@ public class PlayerController : MonoBehaviour
     {
         transform.rotation = new Quaternion(x, y, z, w);
 
-        mTextQx.text = string.Format("Qx: {0:0.0000}", x);
-        mTextQy.text = string.Format("Qy: {0:0.0000}", y);
-        mTextQz.text = string.Format("Qz: {0:0.0000}", z);
-        mTextQw.text = string.Format("Qw: {0:0.0000}", w);
+        try
+        {
+            mTextQx.text = string.Format("Qx: {0:0.0000}", x);
+            mTextQy.text = string.Format("Qy: {0:0.0000}", y);
+            mTextQz.text = string.Format("Qz: {0:0.0000}", z);
+            mTextQw.text = string.Format("Qw: {0:0.0000}", w);
+        }
+        catch (System.Exception ex)
+        {
+            Debug.Log("Rotate exception!!!");
+            Debug.Log(ex.ToString());
+        }
     }
 
     private void SmoothRotate(float x, float y, float z, float w)
     {
         transform.rotation = Quaternion.Lerp(transform.rotation, new Quaternion(x, y, z, w), mRotateInterpolant);
 
-        mTextQx.text = string.Format("Qx: {0:0.0000}", x);
-        mTextQy.text = string.Format("Qy: {0:0.0000}", y);
-        mTextQz.text = string.Format("Qz: {0:0.0000}", z);
-        mTextQw.text = string.Format("Qw: {0:0.0000}", w);
+        try
+        {
+            mTextQx.text = string.Format("Qx: {0:0.0000}", x);
+            mTextQy.text = string.Format("Qy: {0:0.0000}", y);
+            mTextQz.text = string.Format("Qz: {0:0.0000}", z);
+            mTextQw.text = string.Format("Qw: {0:0.0000}", w);
+        }
+        catch (System.Exception ex)
+        {
+            Debug.Log("SmoothRotate exception!!!");
+            Debug.Log(ex.ToString());
+        }
     }
 
     // Export to set rotation
@@ -144,15 +157,23 @@ public class PlayerController : MonoBehaviour
     {
         transform.position = new Vector3(x * mMoveScale, y * mMoveScale, z * mMoveScale);
 
-        // Movement
-        mTextMx.text = string.Format("X: {0:0.0000}", x);
-        mTextMy.text = string.Format("Y: {0:0.0000}", y);
-        mTextMz.text = string.Format("Z: {0:0.0000}", z);
+        try
+        {
+            // Movement
+            mTextMx.text = string.Format("X: {0:0.0000}", x);
+            mTextMy.text = string.Format("Y: {0:0.0000}", y);
+            mTextMz.text = string.Format("Z: {0:0.0000}", z);
 
-        // Current player position
-        mTextPx.text = string.Format("Px: {0:0.0000}", transform.position.x);
-        mTextPy.text = string.Format("Py: {0:0.0000}", transform.position.y);
-        mTextPz.text = string.Format("Pz: {0:0.0000}", transform.position.z);
+            // Current player position
+            mTextPx.text = string.Format("Px: {0:0.0000}", transform.position.x);
+            mTextPy.text = string.Format("Py: {0:0.0000}", transform.position.y);
+            mTextPz.text = string.Format("Pz: {0:0.0000}", transform.position.z);
+        }
+        catch (System.Exception ex)
+        {
+            Debug.Log("Move exception!!!");
+            Debug.Log(ex.ToString());
+        }
     }
 
     private void SmoothMove(float x, float y, float z)
@@ -160,15 +181,23 @@ public class PlayerController : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position,
             new Vector3(x * mMoveScale, y * mMoveScale, z * mMoveScale), mMoveInterpolant);
 
-        // Movement
-        mTextMx.text = string.Format("X: {0:0.0000}", x);
-        mTextMy.text = string.Format("Y: {0:0.0000}", y);
-        mTextMz.text = string.Format("Z: {0:0.0000}", z);
+        try
+        {
+            // Movement
+            mTextMx.text = string.Format("X: {0:0.0000}", x);
+            mTextMy.text = string.Format("Y: {0:0.0000}", y);
+            mTextMz.text = string.Format("Z: {0:0.0000}", z);
 
-        // Current player position
-        mTextPx.text = string.Format("Px: {0:0.0000}", transform.position.x);
-        mTextPy.text = string.Format("Py: {0:0.0000}", transform.position.y);
-        mTextPz.text = string.Format("Pz: {0:0.0000}", transform.position.z);
+            // Current player position
+            mTextPx.text = string.Format("Px: {0:0.0000}", transform.position.x);
+            mTextPy.text = string.Format("Py: {0:0.0000}", transform.position.y);
+            mTextPz.text = string.Format("Pz: {0:0.0000}", transform.position.z);
+        }
+        catch (System.Exception ex)
+        {
+            Debug.Log("SmoothMove exception!!!");
+            Debug.Log(ex.ToString());
+        }
     }
 
     // Export to set movement
