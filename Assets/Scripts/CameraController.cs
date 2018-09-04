@@ -74,19 +74,19 @@ public class CameraController : MonoBehaviour
     }
 
     // Export to set if camera follow player
-    public void setIsFollowPlayer(string b)
+    public void SetIsFollowPlayer(string b)
     {
         mIsFollowPlayer = bool.Parse(b);
     }
 
     // Export to set interpolant movement
-    public void setMoveSmoothTime(string time)
+    public void SetMoveSmoothTime(string time)
     {
         mSmoothTime = float.Parse(time);
     }
 
     // Export to set interpolant movement
-    public void setMoveInterpolant(string interpolant)
+    public void SetMoveInterpolant(string interpolant)
     {
         mMoveInterpolant = float.Parse(interpolant);
     }

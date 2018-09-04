@@ -130,7 +130,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Export to set rotation
-    public void setRotation(string QxyzwExyz)
+    public void SetRotation(string QxyzwExyz)
     {
         string[] values = QxyzwExyz.Split(',');
         if (values.Length != 7)
@@ -147,17 +147,24 @@ public class PlayerController : MonoBehaviour
             mEx = float.Parse(values[4]);
             mEy = float.Parse(values[5]);
             mEz = float.Parse(values[6]);
+            Debug.Log(string.Format("mQx: {0},", mQx) +
+                string.Format("mQy: {0},", mQy) +
+                string.Format("mQz: {0},", mQz) +
+                string.Format("mQw: {0},", mQw) +
+                string.Format("mEx: {0},", mEx) +
+                string.Format("mEy: {0},", mEy) +
+                string.Format("mEz: {0}", mEz));
         }
     }
 
     // Export to set interpolant quaternion
-    public void setRotateInterpolant(string interpolant)
+    public void SetRotateInterpolant(string interpolant)
     {
         mRotateInterpolant = float.Parse(interpolant);
     }
 
     // Export to set rotate type
-    public void setRotateType(string type)
+    public void SetRotateType(string type)
     {
         mRotateType = int.Parse(type);
     }
@@ -206,7 +213,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Export to set movement
-    public void setMovement(string xyz)
+    public void SetMovement(string xyz)
     {
         string[] values = xyz.Split(',');
         if (values.Length != 3)
@@ -222,19 +229,19 @@ public class PlayerController : MonoBehaviour
     }
 
     // Export to set interpolant movement
-    public void setMoveInterpolant(string interpolant)
+    public void SetMoveInterpolant(string interpolant)
     {
         mMoveInterpolant = float.Parse(interpolant);
     }
 
     // Export to set move type
-    public void setMoveType(string type)
+    public void SetMoveType(string type)
     {
         mMoveType = int.Parse(type);
     }
 
     // Export to set move scale
-    public void setMoveScale(string scale)
+    public void SetMoveScale(string scale)
     {
         mMoveScale = float.Parse(scale);
     }
