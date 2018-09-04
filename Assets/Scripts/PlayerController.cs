@@ -90,11 +90,11 @@ public class PlayerController : MonoBehaviour
                 PrintRotateLog(type, "SmoothRotateQuaternion", qx, qy, qz, qw);
                 break;
             case 2:
-                transform.eulerAngles = new Vector3(ex, ey, ez);
+                transform.rotation = Quaternion.Euler(ex, ey, ez);
                 PrintRotateLog(type, "RotateEular", ex, ey, ez);
                 break;
             case 3:
-                transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(ex, ey, ez), mRotateInterpolant);
+                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(ex, ey, ez), mRotateInterpolant);
                 PrintRotateLog(type, "SmoothRotateEular", ex, ey, ez);
                 break;
         }
