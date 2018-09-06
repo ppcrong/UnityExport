@@ -147,13 +147,13 @@ public class PlayerController : MonoBehaviour
             mEx = float.Parse(values[4]);
             mEy = float.Parse(values[5]);
             mEz = float.Parse(values[6]);
-            Debug.Log(string.Format("mQx: {0},", mQx) +
-                string.Format("mQy: {0},", mQy) +
-                string.Format("mQz: {0},", mQz) +
-                string.Format("mQw: {0},", mQw) +
-                string.Format("mEx: {0},", mEx) +
-                string.Format("mEy: {0},", mEy) +
-                string.Format("mEz: {0}", mEz));
+            Debug.Log(string.Format("mQx: {0}", mQx) +
+                string.Format(", mQy: {0}", mQy) +
+                string.Format(", mQz: {0}", mQz) +
+                string.Format(", mQw: {0}", mQw) +
+                string.Format(", mEx: {0}", mEx) +
+                string.Format(", mEy: {0}", mEy) +
+                string.Format(", mEz: {0}", mEz));
         }
     }
 
@@ -225,6 +225,9 @@ public class PlayerController : MonoBehaviour
             mX = float.Parse(values[0]);
             mY = float.Parse(values[1]);
             mZ = float.Parse(values[2]);
+            Debug.Log(string.Format("mX: {0}", mX) +
+                string.Format(", mY: {0}", mY) +
+                string.Format(", mZ: {0}", mZ));
         }
     }
 
