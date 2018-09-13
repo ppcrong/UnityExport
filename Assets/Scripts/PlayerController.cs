@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour
      */
     public int mMoveType = 1;
 
+    // Move Scale
     public float mMoveScale = 1F;
 
     // Use this for initialization
